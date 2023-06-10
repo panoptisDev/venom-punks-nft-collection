@@ -3,7 +3,7 @@ import { Contract } from "locklift";
 import { FactorySource } from "../build/factorySource";
 import { deployCollection, initAccounts } from "./helper";
 
-let sample: Contract<FactorySource["VenomPunks_Collection_V2"]>;
+let sample: Contract<FactorySource["VenomPunks_Collection"]>;
 let acc1: any;
 let acc2: any;
 
@@ -18,7 +18,7 @@ describe("remainOnNft Function Test :::", async function () {
     sample = await deployCollection(locklift, acc1.ownerKeys1, 10000);
   });
   describe("get remain on nft", async function () {
-    it.skip("remainOnNft function setter/getter wokring", async function () {
+    it("remainOnNft function setter/getter wokring", async function () {
       console.log("------------------");
       const remain = await sample.methods.getRemainOnNft().call();
 

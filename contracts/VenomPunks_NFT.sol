@@ -6,9 +6,9 @@ pragma AbiHeader pubkey;
 
 import "@itgold/everscale-tip/contracts/TIP4_1/TIP4_1Nft.sol";
 import "@itgold/everscale-tip/contracts/TIP4_2/TIP4_2Nft.sol";
-// import "./interfaces/ITokenBurned.sol";
+import "./interfaces/ITokenBurned.sol";
 
-contract VenomPunks_NFT_V2 is TIP4_1Nft, TIP4_2Nft {
+contract VenomPunks_NFT is TIP4_1Nft, TIP4_2Nft {
   constructor(
     address owner,
     address sendGasTo,
@@ -18,9 +18,9 @@ contract VenomPunks_NFT_V2 is TIP4_1Nft, TIP4_2Nft {
     tvm.accept();
   }
 
-//   function burn(address dest) external virtual onlyManager {
-//     tvm.accept();
-//     ITokenBurned(_collection).onTokenBurned(_id, _owner, _manager);
-//     selfdestruct(dest);
-//   }
+  function burn(address dest) external virtual onlyManager {
+    tvm.accept();
+    ITokenBurned(_collection).onTokenBurned(_id, _owner, _manager);
+    selfdestruct(dest);
+  }
 }

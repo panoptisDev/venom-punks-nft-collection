@@ -3,7 +3,7 @@ import { Contract } from "locklift";
 import { FactorySource } from "../build/factorySource";
 import { deployCollection, initAccounts } from "./helper";
 
-let sample: Contract<FactorySource["VenomPunks_Collection_V2"]>;
+let sample: Contract<FactorySource["VenomPunks_Collection"]>;
 let acc1: any;
 let acc2: any;
 
@@ -19,7 +19,7 @@ describe("Paused/Unpaused Function Test :::", async function () {
     sample = await deployCollection(locklift, acc1.ownerKeys1, 10000);
   });
   describe("Paused Tests", async function () {
-    it.skip("by default paused should be false", async function () {
+    it("by default paused should be false", async function () {
       console.log("---------------------------------");
       //Step 2: Fetch paused and expect to be false
       const pausedStatus_ = await sample.methods.getPaused().call();
@@ -28,7 +28,7 @@ describe("Paused/Unpaused Function Test :::", async function () {
       // get Total Supply
     });
     //
-    it.skip("Set Paused to true and expect mint to fail or no increase in totalSupply", async function () {
+    it("Set Paused to true and expect mint to fail or no increase in totalSupply", async function () {
       // set pauased to true - only owner call
       await sample.methods
         .setPaused({

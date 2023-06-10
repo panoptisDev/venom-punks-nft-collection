@@ -1,17 +1,14 @@
 import { LockliftConfig } from "locklift";
 import { FactorySource } from "./build/factorySource";
-import { SimpleGiver, GiverWalletV2_3 } from "./giverSettings";
+import { SimpleGiver, GiverWallet, GiverWalletV2_3 } from "./giverSettings";
 
 declare global {
   const locklift: import("locklift").Locklift<FactorySource>;
 }
 
 const LOCAL_NETWORK_ENDPOINT = process.env.NETWORK_ENDPOINT || "http://localhost/graphql";
-const DEV_NET_NETWORK_ENDPOINT = process.env.DEV_NET_NETWORK_ENDPOINT;
-const HACKTHON_ENDPOINT = process.env.DEV_NET_NETWORK_ENDPOINT;
-
-// Create your own link on https://dashboard.evercloud.dev/
-const MAIN_NET_NETWORK_ENDPOINT = process.env.MAIN_NET_NETWORK_ENDPOINT;
+const DEV_NET_NETWORK_ENDPOINT = process.env.DEV_NET_NETWORK_ENDPOINT || "https://gql-testnet.venom.foundation/graphql";
+const HACKTHON_ENDPOINT = process.env.DEV_NET_NETWORK_ENDPOINT || "https://gql-devnet.venom.network/graphql";
 
 const config: LockliftConfig = {
   compiler: {
@@ -68,62 +65,62 @@ const config: LockliftConfig = {
         amount: 20,
       },
     },
-    test: {
-      connection: {
-        id: 1,
-        type: "graphql",
-        group: "dev",
-        data: {
-          endpoints: [HACKTHON_ENDPOINT],
-          latencyDetectionInterval: 1000,
-          local: false,
-        },
-      },
-      giver: {
-        giverFactory: (ever, keyPair, address) => new GiverWalletV2_3(ever, keyPair, address),
-        address: "",
-        phrase: "",
-        accountId: 0,
-      },
-      tracing: {
-        endpoint: DEV_NET_NETWORK_ENDPOINT,
-      },
-      keys: {
-        // Use everdev to generate your phrase
-        // !!! Never commit it in your repos !!!
-        // phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
-        amount: 20,
-      },
-    },
-    main: {
-      // Specify connection settings for https://github.com/broxus/everscale-standalone-client/
-      connection: {
-        id: 1,
-        type: "graphql",
-        group: "main",
-        data: {
-          endpoints: [MAIN_NET_NETWORK_ENDPOINT],
-          latencyDetectionInterval: 1000,
-          local: false,
-        },
-      },
-      // This giver is default Wallet
-      giver: {
-        giverFactory: (ever, keyPair, address) => new GiverWalletV2_3(ever, keyPair, address),
-        address: "",
-        phrase: "",
-        accountId: 0,
-      },
-      tracing: {
-        endpoint: MAIN_NET_NETWORK_ENDPOINT,
-      },
-      keys: {
-        // Use everdev to generate your phrase
-        // !!! Never commit it in your repos !!!
-        // phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
-        amount: 20,
-      },
-    },
+    // test: {
+    //   connection: {
+    //     id: 1,
+    //     type: "graphql",
+    //     group: "dev",
+    //     data: {
+    //       endpoints: [HACKTHON_ENDPOINT],
+    //       latencyDetectionInterval: 1000,
+    //       local: false,
+    //     },
+    //   },
+    //   giver: {
+    //     giverFactory: (ever, keyPair, address) => new GiverWalletV2_3(ever, keyPair, address),
+    //     address: "",
+    //     phrase: "",
+    //     accountId: 0,
+    //   },
+    //   tracing: {
+    //     endpoint: DEV_NET_NETWORK_ENDPOINT,
+    //   },
+    //   keys: {
+    //     // Use everdev to generate your phrase
+    //     // !!! Never commit it in your repos !!!
+    //     // phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
+    //     amount: 20,
+    //   },
+    // },
+    // main: {
+    //   // Specify connection settings for https://github.com/broxus/everscale-standalone-client/
+    //   connection: {
+    //     id: 1,
+    //     type: "graphql",
+    //     group: "main",
+    //     data: {
+    //       endpoints: [MAIN_NET_NETWORK_ENDPOINT],
+    //       latencyDetectionInterval: 1000,
+    //       local: false,
+    //     },
+    //   },
+    //   // This giver is default Wallet
+    //   giver: {
+    //     giverFactory: (ever, keyPair, address) => new GiverWalletV2_3(ever, keyPair, address),
+    //     address: "",
+    //     phrase: "",
+    //     accountId: 0,
+    //   },
+    //   tracing: {
+    //     endpoint: MAIN_NET_NETWORK_ENDPOINT,
+    //   },
+    //   keys: {
+    //     // Use everdev to generate your phrase
+    //     // !!! Never commit it in your repos !!!
+    //     // phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
+    //     amount: 20,
+    //   },
+    // },
   },
   mocha: {
     timeout: 2000000,

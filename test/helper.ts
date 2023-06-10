@@ -3,13 +3,13 @@ import { Contract, Signer, WalletTypes } from "locklift";
 import { FactorySource } from "../build/factorySource";
 
 export async function deployCollection(locklift: any, signer: any, _maxTotalSupply: number) {
-  let sample: Contract<FactorySource["VenomPunks_Collection_V2"]>;
+  let sample: Contract<FactorySource["VenomPunks_Collection"]>;
   // get artifacts
-  const VenomPunks_Collection_V2_Artifacts = await locklift.factory.getContractArtifacts("VenomPunks_Collection_V2");
+  const VenomPunks_Collection_V2_Artifacts = await locklift.factory.getContractArtifacts("VenomPunks_Collection");
   // deploy contract.
   // Step 3: Deploy Collection from Giver account
   const { contract } = await locklift.factory.deployContract({
-    contract: "VenomPunks_Collection_V2",
+    contract: "VenomPunks_Collection",
     publicKey: signer.publicKey,
     initParams: {
       _nonce: locklift.utils.getRandomNonce(),
@@ -64,5 +64,15 @@ export async function initAccounts(locklift: any) {
     publicKey: ownerKeys2.publicKey,
   });
 
-  return { 1: { account1, ownerKeys1 }, 2: { account2, ownerKeys2 } };
+  // Generate account3
+  const ownerKeys3: nt.Ed25519KeyPair = nt.ed25519_generateKeyPair(); // generates a keypair
+  locklift.keystore.addKeyPair(ownerKeys3);
+  // add new account with above keys
+  const account3 = await locklift.factory.accounts.addNewAccount({
+    type: WalletTypes.EverWallet, // or WalletTypes.HighLoadWallet or WalletTypes.WalletV3,
+    value: locklift.utils.toNano(50),
+    publicKey: ownerKeys3.publicKey,
+  });
+
+  return { 1: { account1, ownerKeys1 }, 2: { account2, ownerKeys2 }, 3: { account3, ownerKeys3} };
 }

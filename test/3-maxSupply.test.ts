@@ -3,7 +3,7 @@ import { Contract } from "locklift";
 import { FactorySource } from "../build/factorySource";
 import { deployCollection, initAccounts } from "./helper";
 
-let sample: Contract<FactorySource["VenomPunks_Collection_V2"]>;
+let sample: Contract<FactorySource["VenomPunks_Collection"]>;
 let acc1: any;
 let acc2: any;
 
@@ -18,7 +18,7 @@ describe("Suit for Max Supply on soldout", async function () {
     sample = await deployCollection(locklift, acc1.ownerKeys1, 10);
   });
   describe("MaxSupploychecks", async function () {
-    it.skip("Maxsupplly should be 10000", async function () {
+    it("Maxsupplly should be 10000", async function () {
       console.log("------------------");
       const maxTotalSupply = await sample.methods.getMaxSupply().call();
       expect(Number(maxTotalSupply.totalMaxSupply)).to.equal(10, "Price is different");

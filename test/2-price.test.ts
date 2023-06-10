@@ -3,7 +3,7 @@ import { Contract } from "locklift";
 import { FactorySource } from "../build/factorySource";
 import { deployCollection, initAccounts } from "./helper";
 
-let sample: Contract<FactorySource["VenomPunks_Collection_V2"]>;
+let sample: Contract<FactorySource["VenomPunks_Collection"]>;
 let acc1: any;
 let acc2: any;
 
@@ -18,7 +18,7 @@ describe("setPrice/getPrice Function Test :::", async function () {
     sample = await deployCollection(locklift, acc1.ownerKeys1, 10000);
   });
   describe("get Price test Tests", async function () {
-    it.skip("mint price should be greater than 0", async function () {
+    it("mint price should be greater than 0", async function () {
       console.log("------------------");
       const mintPriceObj = await sample.methods.getMintPrice().call();
       expect(Number(mintPriceObj.mintPrice)).to.equal(1000000000, "Price is different");
@@ -32,7 +32,7 @@ describe("setPrice/getPrice Function Test :::", async function () {
       const mintpriceafter = await sample.methods.getMintPrice().call();
       expect(Number(mintpriceafter.mintPrice)).to.equal(2000000000, "price not changed");
     });
-    it.skip("mint should not work when we pass value less than price", async function () {
+    it("mint should not work when we pass value less than price", async function () {
       await sample.methods
         .bulkMintNft({
           amount: 1,

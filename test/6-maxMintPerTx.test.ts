@@ -3,7 +3,7 @@ import { Contract } from "locklift";
 import { FactorySource } from "../build/factorySource";
 import { deployCollection, initAccounts } from "./helper";
 
-let sample: Contract<FactorySource["VenomPunks_Collection_V2"]>;
+let sample: Contract<FactorySource["VenomPunks_Collection"]>;
 let acc1: any;
 let acc2: any;
 
