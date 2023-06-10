@@ -32,7 +32,7 @@ contract VenomPunks_Collection is TIP4_1Collection, TIP4_2Collection, OwnableExt
   bool paused = false;
 
   // max 10 allowed per wallet
-  mapping(address => uint256) minters; // map of address to number of items minted.
+  mapping(address => uint128) minters; // map of address to number of items minted.
 
   constructor(
     TvmCell codeNft,
@@ -44,7 +44,11 @@ contract VenomPunks_Collection is TIP4_1Collection, TIP4_2Collection, OwnableExt
     _maxTotalSupply = maxTotalSupply;
   }
 
-  function bulkMintNft(uint32 amount) external view virtual {
+  function getMinterStatus(address minterAdd) public view returns (uint128 mintCount) {
+    mintCount = minters[minterAdd];
+  }
+
+  function bulkMintNft(uint128 amount) external view virtual {
     require(!paused); // Should not be paused
     require(amount > 0, CustomCollectionErrors.amount_is_zero);
     require(amount <= 10, CustomCollectionErrors.max_mint_per_tx_exceeded);
@@ -55,14 +59,14 @@ contract VenomPunks_Collection is TIP4_1Collection, TIP4_2Collection, OwnableExt
     // check if we run out of supply
     require(amount + _totalSupply <= _maxTotalSupply, CustomCollectionErrors.supply_run_out);
     // check if wallet exceeds max mint amount of 10;
-    require(minters[msg.sender] <= 10); // TODO: the max per wallet should be configureable
+    require(minters[msg.sender] + amount <= 10); // TODO: the max per wallet should be configureable
     /// reserve original_balance + _mintingFee
     tvm.rawReserve((_processingValue * amount), 4); // First of all reserve the mint price. so that values are locked
     // tvm.rawReserve(0, 4); // reserve only Original Balance. kkep balance of contract in place. and pass the value down.
     _invokeMint(msg.sender, amount, 0);
   }
 
-  function _invokeMint(address owner, uint32 amount, uint32 currentIteration) internal pure virtual {
+  function _invokeMint(address owner, uint128 amount, uint128 currentIteration) internal pure virtual {
     if (currentIteration < amount) {
       VenomPunks_Collection(address(this)).mintNft{ value: 0, flag: 128 }(owner, amount, currentIteration);
     } else {
@@ -71,12 +75,10 @@ contract VenomPunks_Collection is TIP4_1Collection, TIP4_2Collection, OwnableExt
   }
 
   // This shoule be internal because we don't have price check in it.
-  function mintNft(address owner, uint32 amount, uint32 currentIteration) external virtual {
-    require(!paused); // should not be paused
+  function mintNft(address owner, uint128 amount, uint128 currentIteration) external virtual {
     require(msg.sender == address(this), CustomCollectionErrors.sender_is_not_collection);
     // check if we run out of supply
-    require(_totalSupply + 1 < _maxTotalSupply, CustomCollectionErrors.supply_run_out);
-    // Reserve.
+    // require(_totalSupply + 1 < _maxTotalSupply, CustomCollectionErrors.supply_run_out);
     // tvm.rawReserve(0, 4);
     uint256 id = uint256(_totalSupply);
     _totalSupply++;
@@ -94,7 +96,8 @@ contract VenomPunks_Collection is TIP4_1Collection, TIP4_2Collection, OwnableExt
 
     currentIteration++;
     // increase the mints per waller for the sender
-    minters[msg.sender] = minters[msg.sender] + 1;
+    uint128 prevCount = minters[owner]; // should be owner instead of message sender
+    minters[owner] = prevCount + 1;
 
     _invokeMint(owner, amount, currentIteration);
   }

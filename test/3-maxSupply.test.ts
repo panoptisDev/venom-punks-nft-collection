@@ -34,7 +34,8 @@ describe("Suit for Max Supply on soldout", async function () {
         });
       // expect total Supply to be 10k
       const totalSupplyAtSoldOut = await sample.methods.totalSupply({ answerId: 0 }).call();
-      expect(Number(totalSupplyAtSoldOut.count)).to.equal(9, "Less total");
+      console.log(totalSupplyAtSoldOut);
+      expect(Number(totalSupplyAtSoldOut.count)).to.equal(10, "Less total");
       // mint another item and it should fail and totalSupply should remain 10
       await sample.methods
         .bulkMintNft({
@@ -46,7 +47,7 @@ describe("Suit for Max Supply on soldout", async function () {
           amount: locklift.utils.toNano(2),
         });
       const totalSupplyAfter11 = await sample.methods.totalSupply({ answerId: 0 }).call();
-      expect(Number(totalSupplyAfter11.count)).to.equal(9, "MaxSupply check not working");
+      expect(Number(totalSupplyAfter11.count)).to.equal(10, "MaxSupply check not working");
     });
   });
 });
