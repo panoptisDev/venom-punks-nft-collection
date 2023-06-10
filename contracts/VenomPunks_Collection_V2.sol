@@ -9,8 +9,6 @@ import "@itgold/everscale-tip/contracts/TIP4_2/TIP4_2Collection.sol";
 import "@itgold/everscale-tip/contracts/access/OwnableExternal.sol";
 import "./VenomPunks_NFT_V2.sol";
 
-import "./common/console.sol";
-
 // import "./interfaces/ITokenBurned.sol";
 
 library CustomCollectionErrors {
