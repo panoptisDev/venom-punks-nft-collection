@@ -24,8 +24,6 @@ Our ultimate vision is to establish Venom Punks as the leading NFT project on th
 
 In addition, our goal is to broaden the Venom Ecosystem and its adoption through products (dedicated marketplace, Venom Name Service, wVenom Wrapper Station) that will have a direct impact on the Venom Foundation Ecosystem.
 
-# Project Links.
-
 # Dev Instructions
 
 - Build Smart contracts with Locklift
