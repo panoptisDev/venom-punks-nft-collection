@@ -4,6 +4,8 @@ This repository contains Smart contracts for VenomPunks NFT project.
 <br />
 [https://dorahacks.io/buidl/5939](https://dorahacks.io/buidl/5939) <br /> [https://whitepaper.venompunks.com/](https://whitepaper.venompunks.com/)<br />[https://discord.gg/venompunks](https://discord.gg/venompunks)<br />[https://twitter.com/venom_punks](https://twitter.com/venom_punks)<br />[http://www.venompunks.com](http://www.venompunks.com)
 
+# Contract address deployed for Devnet
+VenomPunks Collection: [0:f0752842c91043b9706d459ee267ff6e4d11a6e4af4a067ab5651763aab54550](https://devnet.venomscan.com/accounts/0:f0752842c91043b9706d459ee267ff6e4d11a)
 # Project Vision
 
 Our vision is to make Venom Punks the premier NFT project on the Venom Foundation platform, challenging industry leaders and expanding the Venom Ecosystem through innovative products like a dedicated marketplace, Venom Name Service, and the wVenom Wrapper Station, fostering wider adoption and influencing the Venom Foundation Ecosystem.
